@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load allauth account %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'login/login.css' %}">
+{% endblock %}
+{% block content %}
+    <h1>Log in</h1>
+
+
+        {% element p %}
+            <h2>If you have not created an account yet, then please <a href="{{ signup_url }}">sign up</a> first.</h2>
+        {% endelement %}
+
+        <form id = 'login-form' action="{% url 'account_login' %}" method="post">
+
+                {% csrf_token %}
+                {% element fields form=form unlabeled=True %}
+                {% endelement %}
+                {{ redirect_field }}
+
+
+                {% element button type="submit" tags="prominent,login" %}
+                    {% trans "Sign In" %}
+                {% endelement %}
+        </form>
+
+    {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+
+{% endblock content %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'book-show/book-show.css' %}">
+{% endblock %}
+<div>
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <div class="container">
+      <div>
+        <img src="{{ template_data.book.cover.url }}" class="cover"/>
+      </div>
+      <div class="book-info">
+        <div>
+            <h2>{{ template_data.book.title }}</h2>
+            <p>by {{template_data.book.author }}</h3>
+            <p><b>ISBN:</b> {{template_data.book.isbn }}</p>
+        </div>
+        <p class="price">${{template_data.book.price }}</p>
+        <form action="{% url 'cart.add' isbn=template_data.book.isbn %}" method="post">
+            <div>
+                {% csrf_token %}
+                <input type="number" name="quantity" value="1" min="1" max="10">
+                <button type="submit">ADD TO CART</button>
+            </div>
+        </form>
+
+      </div>   
+    </div>
+    <div class="book-desc">
+        <p>{{template_data.book.description }}</p>
+    </div>
+  </div>
+</div>
+{% endblock content %}

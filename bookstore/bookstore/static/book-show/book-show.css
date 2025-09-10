@@ -1,0 +1,41 @@
+
+.container {
+    display: flex;
+    margin: 5vh 10vw;
+    gap: 120px;
+
+}
+.cover {
+    width: 20vw;
+}
+.book-info {
+    width: 40vw;
+}
+
+.price  {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.book-desc {
+    margin: 5vh 10vw;
+    border: 1px solid grey;
+    padding: 20px
+}
+
+.book-desc::before {
+    content: 'Description';
+    font-weight: bold;
+    font-style: italic;
+    font-size: large;
+    border-bottom: 1px solid grey;
+}
+
+button {
+    background-color: grey;
+    color: white;
+}
+
+form > div {
+    border: none;
+}

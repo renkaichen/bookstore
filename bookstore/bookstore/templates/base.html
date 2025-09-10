@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>{{template_data.title}}</title>
+    <script src="https://kit.fontawesome.com/f773d64adf.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Zen+Dots&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Gamja+Flower&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Zen+Dots&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block styles %}
+    {% endblock %}
+</head>
+<body>
+    <!-- Header -->
+     <nav class="navbar">
+        <a class="brand" href="/">
+            <img src="/static/img/bookstore.png" alt="">
+        </a>
+            <div>
+                <form class="search-form" action="{% url 'books.index' %}" method="GET">
+                    <input type="text" placeholder="Search" name="search">
+                    <button type="submit">
+                        <span style="color:rgb(171,171,171)" class="fa-solid fa-magnifying-glass"></span>
+                    </button>
+                </form>
+            </div>
+        <div>
+            <a href="{% url 'account_signup' %}">
+                <div>
+                    <span style="color:rgb(85, 85, 85)" class="fa-solid fa-user fa-lg"></span>
+                    <p>Account</p>
+                </div>
+            </a>
+
+            <a href="{% url 'cart.index' %}">
+                <div>
+                    <span style="color:rgb(85, 85, 85)" class="fa-solid fa-cart-shopping fa-lg"></span>
+                    <p>Cart</p>
+                </div>
+            </a>
+
+        </div>
+     </nav>
+    <!-- Header -->
+    <div>
+        {% block content %}
+        {% endblock content %}
+    </div>
+    <!-- Footer -->
+    <!-- Footer -->
+</body>
+</html>

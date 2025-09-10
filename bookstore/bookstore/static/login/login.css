@@ -1,0 +1,57 @@
+h1,
+h2 {
+
+    font-weight: normal;
+    font-style: italic  ;
+    margin-left: 50px;
+    margin-right: 50px;
+    
+}
+
+h1 {
+        font-family: 'DM Serif';
+    font-size: 50px;
+    margin-top: 25px;
+}
+
+h2 {
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+h2 > a {
+    text-decoration: underline;
+}
+
+#third-party-holder {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+li {
+    list-style-type: none;
+}
+
+#third-party-holder a {
+    padding: 15px 20px;
+    text-decoration: none;
+    border: 1px solid grey;
+    border-radius: 50px;
+    margin-left: 50px;
+}
+
+#login-form {
+    border: 1px solid grey;
+    padding: 25px 50px;
+}
+
+#login-form input {
+    border: none;
+    border-bottom: 1px solid grey;
+}
+
+#login-form a {
+    text-decoration: underline;
+}
+

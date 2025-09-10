@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'book-index/book-index.css' %}">
+{% endblock %}
+<div>
+  <h1>{{ template_data.title }}</h1>
+    <div id="book-container">
+      {% for book in template_data.books %}
+      <div>
+        <div>
+
+          <div class="book-info">
+            <a href="{% url 'books.show' isbn=book.isbn %}">
+                <img class="cover" src="{{ book.cover.url }}">
+                <p class="title">{{ book.title }}</p>
+                <div class="book-ap">
+                    <p class="author">{{ book.author }}</p>
+                    <p class="price">{{ book.price }}</p>
+                </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,55 @@
+#book-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 50px;
+    gap: 40px;
+}
+
+#book-container {
+    
+}
+
+.cover {
+    width: max(200px, 5vw);
+}
+
+.title {
+    width: max(200px, 5vw);
+    height: max(50px, 2vh); 
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.author {
+    width: max(100px, 2.5vw);
+    height: max(24px, .625vh); 
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.price {
+    font-weight: 600;
+}
+
+.book-ap {
+    display: flex;
+    justify-content: space-between;
+    width: max(200px, 5vw);
+}
+
+h1 {
+    font-family: 'DM Serif';
+    font-weight: normal;
+    font-style: italic  ;
+    padding-left: 50px;
+    font-size: 50px;
+
+}
+

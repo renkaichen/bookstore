@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load allauth i18n %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'signup/signup.css' %}">
+{% endblock %}
+{% block content %}
+    <h1>Sign Up</h1>
+    <h2>Already have an account? Then please <a href="{{ login_url }}">sign in</a>.</h2>
+        {% url 'account_signup' as action_url %}
+        <form id="signup-form" action="{% url 'account_signup' %}" method="post">
+                {% csrf_token %}
+                {% element fields form=form unlabeled=True %}
+                {% endelement %}
+                {{ redirect_field }}
+                {% element button tags="prominent,signup" type="submit" %}
+                    {% trans "Sign Up" %}
+                {% endelement %}    
+        </form>
+    {% if SOCIALACCOUNT_ENABLED %}
+        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+    {% endif %}
+{% endblock content %}

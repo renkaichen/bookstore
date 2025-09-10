@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% load cart_filters %}
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'cart-index/cart-index.css' %}">
+{% endblock %}
+<div>
+  <div>
+    {% if template_data.books_in_cart|length > 0 %}
+    <div style="border-right: 1px solid grey">
+        <div class="row">
+                  <p class="header">My Cart</p>
+                  <a href="{% url 'cart.clear' %}">
+                    <button class="btn btn-danger mb-2">
+                      Remove all books from Cart
+                    </button>
+                  </a>
+        </div>
+
+          {% for book in template_data.books_in_cart %}
+            <div class="item">
+                <img src="{{book.cover.url}}" alt="">
+                <div>
+                    <div class="row">
+                      <h2>{{ book.title }}</h2>
+                      <h2>{{request.session.cart|get_quantity:book.isbn }} x {{ book.price }}</h2>
+                    </div>
+                    <p>{{ book.author }}</p>
+                    <p>Quantity: {{request.session.cart|get_quantity:book.isbn }}</p>
+                </div>
+            </div>
+          {% endfor %}
+          <p style='text-align: end;' class="header">Total: ${{ template_data.cart_total }}</p>
+    {% else %}
+      <p class="header">Your cart is empty!</p>
+    {% endif %}
+</div>
+
+{% endblock content %}
