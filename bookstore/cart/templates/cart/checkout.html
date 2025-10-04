@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cart_filters %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'cart-index/cart-index.css' %}">
+{% endblock %}
+{% block content %}
+<div class="content-wrapper">
+    <h1>Checkout</h1>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    {% if template_data.books_in_cart|length > 0 %}
+        <div class="checkout-summary">
+            <h2>Order Summary</h2>
+            
+            {% for book in template_data.books_in_cart %}
+                <div class="checkout-item">
+                    <img src="{{ book.cover.url }}" alt="{{ book.title }}">
+                    <div class="item-details">
+                        <h3>{{ book.title }}</h3>
+                        <p>by {{ book.author }}</p>
+                        <p>Quantity: {{ template_data.cart|get_quantity:book.isbn }}</p>
+                        <p>Price: ${{ book.price }}</p>
+                        <p>Subtotal: ${{ book|calculate_subtotal:template_data.cart|floatformat:2 }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            
+            <div class="order-total">
+                <h2>Total: ${{ template_data.cart_total }}</h2>
+            </div>
+            
+            <form method="post" class="checkout-form">
+                {% csrf_token %}
+                <button type="submit" class="checkout-button">
+                    Place Order
+                </button>
+            </form>
+            
+            <div class="checkout-actions">
+                <a href="{% url 'cart.index' %}" class="back-to-cart">
+                    Back to Cart
+                </a>
+            </div>
+        </div>
+    {% else %}
+        <p>Your cart is empty!</p>
+        <a href="{% url 'books.index' %}" class="continue-shopping">
+            Continue Shopping
+        </a>
+    {% endif %}
+</div>
+
+<style>
+.content-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.checkout-summary {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-item {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.checkout-item:last-of-type {
+    border-bottom: none;
+}
+
+.checkout-item img {
+    width: 100px;
+    height: 120px;
+    object-fit: cover;
+    margin-right: 20px;
+    border-radius: 4px;
+}
+
+.item-details {
+    flex: 1;
+}
+
+.item-details h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.item-details p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.order-total {
+    text-align: right;
+    margin: 30px 0;
+    padding: 20px 0;
+    border-top: 2px solid #333;
+}
+
+.order-total h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.checkout-form {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.checkout-button {
+    background-color: #28a745;
+    color: white;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.checkout-button:hover {
+    background-color: #218838;
+}
+
+.checkout-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.back-to-cart {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.back-to-cart:hover {
+    text-decoration: underline;
+}
+
+.continue-shopping {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.continue-shopping:hover {
+    background-color: #0056b3;
+    color: white;
+    text-decoration: none;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeaa7;
+}
+
+.alert-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+</style>
+{% endblock content %}

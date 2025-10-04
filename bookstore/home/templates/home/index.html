@@ -1,8 +1,38 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block styles %}
 <link rel="stylesheet" type="text/css" href="{% static 'home/home.css' %}">
+{% endblock %}
 {% block content %}
-<!--<img style="height:35vh; width:100vw; object-fit: cover;"src="https://images.pexels.com/photos/694740/pexels-photo-694740.jpeg" alt=""> !-->
+<!-- Hero Image -->
 <a href="/books"><img style="height:260px; width:100vw; object-fit: cover;"src="/static/img/homepage.jpg" alt=""></a>
+
+<!-- Featured Book Section -->
+{% if template_data.featured_book %}
+<div class="featured-book-section">
+    <div class="featured-book-container">
+        <div class="featured-book-content">
+            <div class="book-image">
+                <img src="{{ template_data.featured_book.cover.url }}" alt="{{ template_data.featured_book.title }}">
+            </div>
+            <div class="book-details">
+                <h2 class="featured-title">Featured Book</h2>
+                <h3 class="book-title">{{ template_data.featured_book.title }}</h3>
+                <p class="book-author">by {{ template_data.featured_book.author }}</p>
+                <p class="book-price">${{ template_data.featured_book.price|floatformat:2 }}</p>
+                <p class="book-description">{{ template_data.featured_book.description|truncatewords:30 }}</p>
+                <div class="book-actions">
+                    <a href="{% url 'books.show' template_data.featured_book.isbn %}" class="view-book-btn">
+                        View Details
+                    </a>
+                    <a href="{% url 'books.index' %}" class="browse-more-btn">
+                        Browse More Books
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 {% endblock content %}

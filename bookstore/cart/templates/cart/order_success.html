@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'profile/profile.css' %}">
+{% endblock %}
+{% block content %}
+<div class="content-wrapper">
+    <h1>Order Confirmed!</h1>
+    <p>Thank you for your purchase, {{ template_data.order.user.username }}!</p>
+    
+    <div class="order-details">
+        <h2>Order Details</h2>
+        <div class="order-info">
+            <p><strong>Order Number:</strong> #{{ template_data.order.id }}</p>
+            <p><strong>Order Date:</strong> {{ template_data.order.created_at|date:"F d, Y" }}</p>
+            <p><strong>Total Amount:</strong> ${{ template_data.order.total_amount }}</p>
+        </div>
+        
+        <h3>Items Ordered:</h3>
+        <div class="order-items">
+            {% for item in template_data.order.items.all %}
+                <div class="order-item">
+                    <img src="{{ item.book.cover.url }}" alt="{{ item.book.title }}">
+                    <div class="item-info">
+                        <h4>{{ item.book.title }}</h4>
+                        <p>by {{ item.book.author }}</p>
+                        <p>Quantity: {{ item.quantity }}</p>
+                        <p>Price: ${{ item.price }}</p>
+                        <p>Subtotal: ${{ item.total_price }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="success-actions">
+        <a href="{% url 'books.index' %}" class="continue-shopping">
+            Continue Shopping
+        </a>
+        <a href="{% url 'profile.index' %}" class="view-profile">
+            View Profile
+        </a>
+    </div>
+</div>
+
+<style>
+.order-details {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 30px;
+    margin: 30px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+}
+
+.order-info {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.order-info p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.order-items {
+    margin-top: 20px;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.order-item img {
+    width: 80px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 20px;
+    border-radius: 4px;
+}
+
+.item-info h4 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.item-info p {
+    margin: 5px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.success-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.continue-shopping,
+.view-profile {
+    display: inline-block;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.continue-shopping {
+    background-color: #007bff;
+    color: white;
+}
+
+.continue-shopping:hover {
+    background-color: #0056b3;
+    color: white;
+    text-decoration: none;
+}
+
+.view-profile {
+    background-color: #6c757d;
+    color: white;
+}
+
+.view-profile:hover {
+    background-color: #545b62;
+    color: white;
+    text-decoration: none;
+}
+</style>
+{% endblock content %}

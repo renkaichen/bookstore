@@ -1,7 +1,69 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
+{% block styles %}
 <link rel="stylesheet" type="text/css" href="{% static 'profile/profile.css' %}">
+{% endblock %}
 {% block content %}
-<p>My Profile</p>
-
+<div class="content-wrapper">
+    <h1>Hello, {{ template_data.username }}!</h1>
+    <p>Welcome to your profile page.</p>
+    
+    <div class="profile-actions">
+        <a href="{% url 'account_logout' %}" class="logout-button">
+            Logout
+        </a>
+    </div>
+    
+    <div class="order-history">
+        <h2>Order History</h2>
+        
+        {% if template_data.orders %}
+            <div class="orders-list">
+                {% for order in template_data.orders %}
+                    <div class="order-card">
+                        <div class="order-header">
+                            <h3>Order #{{ order.id }}</h3>
+                            <span class="order-date">{{ order.created_at|date:"F d, Y" }}</span>
+                        </div>
+                        
+                        <div class="order-details">
+                            <p><strong>Total:</strong> ${{ order.total_amount|floatformat:2 }}</p>
+                            <p><strong>Status:</strong> 
+                                {% if order.is_completed %}
+                                    <span class="status completed">Completed</span>
+                                {% else %}
+                                    <span class="status pending">Pending</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                        
+                        <div class="order-items">
+                            <h4>Items:</h4>
+                            <ul>
+                                {% for item in order.items.all %}
+                                    <li class="order-item">
+                                        <img src="{{ item.book.cover.url }}" alt="{{ item.book.title }}">
+                                        <div class="item-info">
+                                            <strong>{{ item.book.title }}</strong>
+                                            <p>by {{ item.book.author }}</p>
+                                            <p>Quantity: {{ item.quantity }} × ${{ item.price|floatformat:2 }}</p>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-orders">
+                <p>You haven't placed any orders yet.</p>
+                <a href="{% url 'books.index' %}" class="continue-shopping">
+                    Start Shopping
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock content %}

@@ -1,31 +1,58 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
 {% load i18n %}
 {% load allauth account %}
-{% load static %}
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'login/login.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'login/login.css' %}">
 {% endblock %}
 {% block content %}
-    <h1>Log in</h1>
+<div class="content-wrapper">
+    <h1>Sign In</h1>
+    <p>If you have not created an account yet, then please <a href="{{ signup_url }}">sign up</a> first.</p>
+    
+    {% url 'account_login' as login_url %}
+    <form id="login-form" method="post" action="{{ login_url }}">
+        {% csrf_token %}
+        <label for="id_login">Email or Username:</label>
+        <input type="text" name="login" placeholder="Email or Username" autocomplete="username" maxlength="150" required="" id="id_login">
+        
+        <label for="id_password">Password:</label>
+        <input type="password" name="password" placeholder="Password" autocomplete="current-password" required="" id="id_password">
+        
+        <label>
+            <input type="checkbox" name="remember" id="id_remember"> Remember me
+        </label>
+        
+        {{ redirect_field }}
+        <button type="submit">Sign In</button>
+    </form>
 
-
-        {% element p %}
-            <h2>If you have not created an account yet, then please <a href="{{ signup_url }}">sign up</a> first.</h2>
-        {% endelement %}
-
-        <form id = 'login-form' action="{% url 'account_login' %}" method="post">
-
-                {% csrf_token %}
-                {% element fields form=form unlabeled=True %}
-                {% endelement %}
-                {{ redirect_field }}
-
-
-                {% element button type="submit" tags="prominent,login" %}
-                    {% trans "Sign In" %}
-                {% endelement %}
-        </form>
-
-    {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
-
+    {% if LOGIN_BY_CODE_ENABLED or PASSKEY_LOGIN_ENABLED %}
+        <hr>
+        <div id="alternative-login">
+            {% if PASSKEY_LOGIN_ENABLED %}
+                <button type="submit" form="mfa_login" id="passkey_login">
+                    Sign in with a passkey
+                </button>
+            {% endif %}
+            {% if LOGIN_BY_CODE_ENABLED %}
+                <a href="{{ request_login_code_url }}">
+                    Send me a sign-in code
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+    
+    {% if SOCIALACCOUNT_ENABLED %}
+        <div id="third-party-holder">
+            {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+        </div>
+    {% endif %}
+</div>
 {% endblock content %}
+{% block extra_body %}
+    {{ block.super }}
+    {% if PASSKEY_LOGIN_ENABLED %}
+        {% include "mfa/webauthn/snippets/login_script.html" with button_id="passkey_login" %}
+    {% endif %}
+{% endblock %}

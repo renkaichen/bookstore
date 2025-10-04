@@ -40,3 +40,81 @@
     align-self: center;    
     margin-right: 50px;
 }
+
+.checkout-btn,
+.login-btn,
+.continue-shopping-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    margin: 10px;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.checkout-btn {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    font-size: 18px;
+    padding: 18px 35px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.checkout-btn:hover {
+    background: linear-gradient(135deg, #218838, #1ea085);
+    color: white;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
+
+.checkout-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.checkout-btn:hover:before {
+    left: 100%;
+}
+
+.login-btn {
+    background-color: #007bff;
+    color: white;
+    border: 2px solid #007bff;
+}
+
+.login-btn:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    color: white;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.continue-shopping-btn {
+    background-color: transparent;
+    color: #6c757d;
+    border: 2px solid #6c757d;
+    font-style: italic;
+}
+
+.continue-shopping-btn:hover {
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+}
